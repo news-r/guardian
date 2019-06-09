@@ -3,17 +3,59 @@
 #' The content endpoint returns all pieces of content in the API.
 #' 
 #' @param q The search query parameter supports \code{AND}, \code{OR} and \code{NOT} operators.
+#' @param ... Any other parameter, or filter, see the full list at \url{https://open-platform.theguardian.com/documentation/}.
+#' @param items Vector of API links to items.
 #' @param pages Number of pages to collect.
 #' 
 #' @examples
 #' \dontrun{
 #' (to_search <- gd_search("debates", pages = 13))
 #' results <- gd_call(to_search)
+#' 
+#' # select items to retrieve
+#' items_to_get <- gd_items(results$apiUrl[1:13])
+#' items <- gd_call(items_to_get)
 #' }
 #' 
+#' @name calls
 #' @export
-gd_search <- function(q = NULL, pages = 1) {
-  .build_calls(q = q, pages = pages, endpoint = "search")
+gd_search <- function(q = NULL, ..., pages = 1) {
+  .build_calls(q = q, ..., pages = pages, endpoint = "search")
+}
+
+#' @rdname calls
+#' @export
+gd_tags <- function(q = NULL, ..., pages = 1) {
+  .build_calls(q = q, ..., pages = pages, endpoint = "tags")
+}
+
+#' @rdname calls
+#' @export
+gd_sections <- function(q = NULL, ..., pages = 1) {
+  .build_calls(q = q, ..., pages = pages, endpoint = "tags")
+}
+
+#' @rdname calls
+#' @export
+gd_editions <- function(q = NULL, ..., pages = 1) {
+  .build_calls(q = q, ..., pages = pages, endpoint = "tags")
+}
+
+#' @rdname calls
+#' @export
+gd_items <- function(items, ...) {
+  map(items, function(x){
+
+    url <- parse_url(x)
+    url$query <- list(..., `api-key` = .get_key())
+    url <- build_url(url)
+
+    list(
+      call = url,
+      endpoint = "item"
+    )
+  })  %>% 
+    .construct_call()
 }
 
 #' Call
@@ -45,7 +87,7 @@ gd_call.guardianCalls <- function(..., batch_size = 12){
   size <- (batch_size %/% 12) + 1
 
   cat(
-    crayon::blue(cli::symbol$info), "Making", crayon::blue(length(call_objs)), "calls in", crayon::blue(size), "batches of", batch_size, "\n"
+    crayon::blue(cli::symbol$info), "Making", length(call_objs), "calls in", crayon::green(size), "batches of", batch_size, "\n"
   )
 
   calls <- map(call_objs, "call")
@@ -88,6 +130,10 @@ gd_call.guardianCalls <- function(..., batch_size = 12){
   ) %>% 
     flatten() %>% 
     map("response") %>% 
-    map("results") %>% 
+    map(function(response){
+      if(length(response$content))
+        return(response$content)
+      return(response$results)
+    }) %>% 
     map_dfr(dplyr::bind_rows)
 }
