@@ -1,0 +1,56 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/news-r/guardian.svg?branch=master)](https://travis-ci.org/news-r/guardian)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/news-r/guardian?branch=master&svg=true)](https://ci.appveyor.com/project/news-r/guardian)
+<!-- badges: end -->
+
+# guardian
+
+Access over 2 million pieces of content from [The Guardian](https://www.theguardian.com/)
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("news-r/guardian")
+```
+
+## Setup
+
+To get started, You need a [free API key](https://open-platform.theguardian.com/access/). Then either specify the aforementioned key using `guardian_key` or specify it as environment variable (likely in your .Renviron) as `GUARDIAN_API_KEY`.
+
+```r
+guardian_key("xxXXxxXx")
+```
+
+## Example
+
+The package revolves around the following principle, first create your API calls then execute them with `gd_call`. This is because the package is built upon the [async package](https://github.com/r-lib/async) which lets you execute API calls asynchonously: the (free) developer plan allows you to do up to 12 calls per second. 
+
+Below we look for 15 pages of articles on "Brexit".
+
+```{r}
+library(guardian)
+
+# search for brexit articles
+(to_search <- gd_search("brexit", pages = 15))
+
+# actually execute 15 calls (1 per page)
+results <- gd_call(to_search)
+head(results)
+```
