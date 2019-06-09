@@ -1,5 +1,5 @@
 Package: guardian
-Title: What the Package Does (One Line, Title Case)
+Title: Access 'The Guardian' Articles
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "First",
@@ -7,7 +7,14 @@ Authors@R:
            role = c("aut", "cre"),
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+Description: Access 'The Guardian' articles.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports:
+  cli,
+  crayon,
+  httr,
+  async,
+  assertthat
+RoxygenNote: 6.1.1
