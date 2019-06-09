@@ -17,5 +17,7 @@ Imports:
   crayon,
   httr,
   async,
+  purrr,
+  jsonlite,
   assertthat
 RoxygenNote: 6.1.1

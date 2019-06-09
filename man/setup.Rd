@@ -3,20 +3,15 @@
 \name{setup}
 \alias{setup}
 \alias{guardian_key}
-\alias{guardian_batches}
 \title{Setup}
 \usage{
 guardian_key(key)
-
-guardian_batches(cps = 12)
 }
 \arguments{
 \item{key}{Your API key, freely available at \url{https://open-platform.theguardian.com}.}
-
-\item{cps}{Calls per second: maximum number of calls per seconds.}
 }
 \description{
-Setup your session, all subsequent calls will be done using the API key and given the batch limit.
+Setup your session, all subsequent calls will be done using the API key.
 }
 \note{
 You can specify \code{GUARDIAN_API_KEY} as environment variable, likely in your \code{.Renviron} file.
