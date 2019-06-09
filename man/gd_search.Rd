@@ -14,3 +14,10 @@ gd_search(q = NULL, pages = 1)
 \description{
 The content endpoint returns all pieces of content in the API.
 }
+\examples{
+\dontrun{
+(to_search <- gd_search("debates", pages = 13))
+results <- gd_call(to_search)
+}
+
+}

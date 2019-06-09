@@ -17,3 +17,10 @@ gd_call(..., batch_size = 12)
 \description{
 Executes calls from \code{guardianCalls} objects
 }
+\examples{
+\dontrun{
+(to_search <- gd_search("debates", pages = 13))
+results <- gd_call(to_search)
+}
+
+}

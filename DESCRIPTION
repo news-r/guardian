@@ -18,6 +18,7 @@ Imports:
   httr,
   async,
   purrr,
+  dplyr,
   jsonlite,
   assertthat
 RoxygenNote: 6.1.1

@@ -5,6 +5,12 @@
 #' @param q The search query parameter supports \code{AND}, \code{OR} and \code{NOT} operators.
 #' @param pages Number of pages to collect.
 #' 
+#' @examples
+#' \dontrun{
+#' (to_search <- gd_search("debates", pages = 13))
+#' results <- gd_call(to_search)
+#' }
+#' 
 #' @export
 gd_search <- function(q = NULL, pages = 1) {
   .build_calls(q = q, pages = pages, endpoint = "search")
@@ -17,6 +23,12 @@ gd_search <- function(q = NULL, pages = 1) {
 #' @param ... Objects of class \code{guardianCalls}.
 #' @param batch_size Size of each batch.
 #' 
+#' @examples
+#' \dontrun{
+#' (to_search <- gd_search("debates", pages = 13))
+#' results <- gd_call(to_search)
+#' }
+#' 
 #' @export
 gd_call <- function(..., batch_size = 12) UseMethod("gd_call")
 
@@ -26,26 +38,30 @@ gd_call <- function(..., batch_size = 12) UseMethod("gd_call")
 gd_call.guardianCalls <- function(..., batch_size = 12){
   
   # flatten calls
-  calls <- list(...) %>% 
+  call_objs <- list(...) %>% 
     flatten()
 
   # compute size
   size <- (batch_size %/% 12) + 1
 
   cat(
-    crayon::blue(cli::symbol$info), "Making", crayon::blue(length(calls)), "calls in", crayon::blue(size), "batches of", batch_size, "\n"
+    crayon::blue(cli::symbol$info), "Making", crayon::blue(length(call_objs)), "calls in", crayon::blue(size), "batches of", batch_size, "\n"
   )
+
+  calls <- map(call_objs, "call")
+  endpoint <- map(call_objs, "endpoint")
   
-  batches <- calls %>% 
+  calls %>% 
     split(rep_len(1:size, length(calls))) %>% 
-    map(unlist)
-
-
+    map(unlist) %>% 
+    .call_map()
+  
 }
 
 .http_warn_for_status <- function(response){
-  if(response$status_code != 200)
-    warning("error")
+  if(response$status_code != 200){
+    warning(crayon::red(cli::symbol$cross), " Call error", call. = FALSE)
+  }
   return(response)
 }
 
@@ -70,5 +86,8 @@ gd_call.guardianCalls <- function(..., batch_size = 12){
       synchronise(.call(x))
     }
   ) %>% 
-    flatten()
+    flatten() %>% 
+    map("response") %>% 
+    map("results") %>% 
+    map_dfr(dplyr::bind_rows)
 }

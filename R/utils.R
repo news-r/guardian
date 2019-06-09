@@ -15,10 +15,17 @@ BASE_URL <- "https://content.guardianapis.com"
   parsed_url <- parse_url(BASE_URL)
   parsed_url$path <- endpoint
   query <- list(..., `api-key` = .get_key())
-  calls <- map(seq(pages), function(p){
-    query$page <- p
-    parsed_url$query <- query
-    build_url(parsed_url) 
-  })
+  calls <- seq(pages) %>% 
+    map(function(p){
+      query$page <- p
+      parsed_url$query <- query
+      build_url(parsed_url) 
+    }) %>% 
+      map(function(x){
+        list(
+          call = x,
+          endpoint = endpoint
+        )
+      })
   .construct_call(calls)
 }
