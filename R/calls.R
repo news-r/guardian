@@ -1,6 +1,8 @@
-#' Search
+#' Calls
 #' 
-#' The content endpoint returns all pieces of content in the API.
+#' All of The Guardian API endpoints. 
+#' 
+#' @note This only "prepares" the API calls, use \code{\link{gd_call}} to execute them.
 #' 
 #' @param q The search query parameter supports \code{AND}, \code{OR} and \code{NOT} operators.
 #' @param ... Any other parameter, or filter, see the full list at \url{https://open-platform.theguardian.com/documentation/}.
@@ -124,7 +126,7 @@ gd_call.guardianCalls <- function(..., batch_size = 12){
     map(
     function(x){
       if(length(batches) > 1)
-        Sys.sleep(3)
+        Sys.sleep(2)
       synchronise(.call(x))
     }
   ) %>% 

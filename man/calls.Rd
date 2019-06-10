@@ -7,7 +7,7 @@
 \alias{gd_sections}
 \alias{gd_editions}
 \alias{gd_items}
-\title{Search}
+\title{Calls}
 \usage{
 gd_search(q = NULL, ..., pages = 1)
 
@@ -29,7 +29,10 @@ gd_items(items, ...)
 \item{items}{Vector of API links to items.}
 }
 \description{
-The content endpoint returns all pieces of content in the API.
+All of The Guardian API endpoints.
+}
+\note{
+This only "prepares" the API calls, use \code{\link{gd_call}} to execute them.
 }
 \examples{
 \dontrun{
