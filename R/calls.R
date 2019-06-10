@@ -84,7 +84,7 @@ gd_call.guardianCalls <- function(..., batch_size = 12){
     flatten()
 
   # compute size
-  size <- (batch_size %/% 12) + 1
+  size <- (length(call_objs) %/% batch_size) + 1
 
   cat(
     crayon::blue(cli::symbol$info), "Making", length(call_objs), "calls in", crayon::green(size), "batches of", batch_size, "\n"
