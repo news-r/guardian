@@ -40,7 +40,7 @@ guardian_key("xxXXxxXx")
 
 ## Example
 
-The package revolves around the following principle, first create your API calls then execute them with `gd_call`. This is because the package is built upon the [async package](https://github.com/r-lib/async) which lets you execute API calls asynchonously: the (free) developer plan allows you to do up to 12 calls per second. 
+The package revolves around the following principle, first create your API calls then execute them with `gd_call`. This is because the package is built upon the [async package](https://github.com/r-lib/async) which lets you execute API calls asynchonously: the (free) developer plan allows you to do up to 12 calls per second so the package calls "prepared" calls in batches of 12. If you have a premium account you can change the batch size with the argument `batch_size` in `gd_call`.
 
 Below we look for 15 pages of articles on "Brexit".
 
@@ -51,6 +51,5 @@ library(guardian)
 (to_search <- gd_search("brexit", pages = 15))
 
 # actually execute 15 calls (1 per page)
-results <- gd_call(to_search)
-head(results)
+(results <- gd_call(to_search))
 ```
