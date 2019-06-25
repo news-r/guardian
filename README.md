@@ -41,9 +41,9 @@ The package revolves around the following principle, first create your
 API calls then execute them with `gd_call`. This is because the package
 is built upon the [async package](https://github.com/r-lib/async) which
 lets you execute API calls asynchonously: the (free) developer plan
-allows you to do up to 12 calls per second so the package calls
-“prepared” calls in batches of 12. If you have a premium account you
-can change the batch size with the argument `batch_size` in `gd_call`.
+allows you to do up to 12 calls per second so the package
+“prepares” calls. Then executes them with `gd_call` in batches of 12 (per second). If you have a premium account you
+can change the batch size with the argument `batch_size` in `gd_call`. This allows collecting data much faster than if they were done one after the other.
 
 Below we look for 15 pages of articles on “Brexit”.
 
