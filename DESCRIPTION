@@ -23,3 +23,4 @@ Imports:
   jsonlite,
   assertthat
 RoxygenNote: 6.1.1
+Remotes: r-lib/async
