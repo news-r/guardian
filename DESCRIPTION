@@ -19,6 +19,7 @@ Imports:
   async,
   purrr,
   dplyr,
+  tibble,
   jsonlite,
   assertthat
 RoxygenNote: 6.1.1

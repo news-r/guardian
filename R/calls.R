@@ -134,8 +134,8 @@ gd_call.guardianCalls <- function(..., batch_size = 12){
     map("response") %>% 
     map(function(response){
       if(length(response$content))
-        return(response$content)
-      return(response$results)
+        return(tibble::as_tibble(response$content))
+      return(tibble::as_tibble(response$results))
     }) %>% 
     map_dfr(dplyr::bind_rows)
 }
