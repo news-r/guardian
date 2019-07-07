@@ -1,0 +1,84 @@
+<!-- badges go here -->
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/JohnCoene)
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(htmltools)
+```
+
+```{r, echo=FALSE}
+br()
+br()
+
+div(
+  class = "row",
+  div(
+    class = "col-md-4",
+    img(
+      src = "logo.png",
+      class = "img-responsive responsive-img"
+    )
+  ),
+  div(
+    class = "col-md-8",
+    p(
+      "Package description goes here."
+    ),
+    p(
+      tags$a(
+        tags$i(class = "fa fa-rocket"),
+        class = "btn btn-primary",
+        href = "articles/something.html",
+        style = "margin-bottom: 5px;",
+        "First button"
+      ),
+      tags$a(
+        tags$i(class = "fa fa-paint-brush"),
+        class = "btn btn-default",
+        href = "articles/something.html",
+        style = "margin-bottom: 5px;",
+        "Second button"
+      )
+    )
+  )
+)
+```
+
+## Installation
+
+You can install the package with `remotes` from Github, see [changes](news/index.html).
+
+```{r, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("news-r/pkg") # github
+```
+
+## Setup
+
+To get started, You need a [free API key](https://open-platform.theguardian.com/access/). Then either specify the aforementioned key using `guardian_key` or specify it as environment variable (likely in your .Renviron) as `GUARDIAN_API_KEY`.
+
+```r
+guardian_key("xxXXxxXx")
+```
+
+## Example
+
+The package revolves around the following principle, first create your API calls then execute them with `gd_call`. This is because the package is built upon the [async package](https://github.com/r-lib/async) which lets you execute API calls asynchonously: the (free) developer plan allows you to do up to 12 calls per second. 
+
+Below we look for 15 pages of articles on "Brexit".
+
+```{r}
+library(guardian)
+
+# search for brexit articles
+(to_search <- gd_search("brexit", pages = 15))
+
+# actually execute 15 calls (1 per page)
+results <- gd_call(to_search)
+head(results)
+```

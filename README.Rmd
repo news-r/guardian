@@ -29,28 +29,3 @@ You can install the development version from [GitHub](https://github.com/) with:
 # install.packages("remotes")
 remotes::install_github("news-r/guardian")
 ```
-
-## Setup
-
-To get started, You need a [free API key](https://open-platform.theguardian.com/access/). Then either specify the aforementioned key using `guardian_key` or specify it as environment variable (likely in your .Renviron) as `GUARDIAN_API_KEY`.
-
-```r
-guardian_key("xxXXxxXx")
-```
-
-## Example
-
-The package revolves around the following principle, first create your API calls then execute them with `gd_call`. This is because the package is built upon the [async package](https://github.com/r-lib/async) which lets you execute API calls asynchonously: the (free) developer plan allows you to do up to 12 calls per second. 
-
-Below we look for 15 pages of articles on "Brexit".
-
-```{r}
-library(guardian)
-
-# search for brexit articles
-(to_search <- gd_search("brexit", pages = 15))
-
-# actually execute 15 calls (1 per page)
-results <- gd_call(to_search)
-head(results)
-```

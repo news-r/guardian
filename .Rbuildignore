@@ -2,3 +2,5 @@
 ^README\.Rmd$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^index\.Rmd$
+^_pkgdown\.yml$

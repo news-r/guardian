@@ -1,6 +1,6 @@
 Package: guardian
 Title: Access 'The Guardian' Articles
-Version: 0.0.1.9000
+Version: 0.0.1
 Authors@R: 
     c(person(given = "John",
            family = "Coene",
