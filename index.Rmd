@@ -27,22 +27,22 @@ div(
   div(
     class = "col-md-8",
     p(
-      "Package description goes here."
+      "Access over 2 million pieces of content from The Guardian."
     ),
     p(
       tags$a(
-        tags$i(class = "fa fa-rocket"),
+        tags$i(class = "fa fa-code"),
         class = "btn btn-primary",
-        href = "articles/something.html",
+        href = "reference/index.html",
         style = "margin-bottom: 5px;",
-        "First button"
+        "Reference"
       ),
       tags$a(
-        tags$i(class = "fa fa-paint-brush"),
+        tags$i(class = "fa fa-github"),
         class = "btn btn-default",
-        href = "articles/something.html",
+        href = "https://github.com/news-r/guardian",
         style = "margin-bottom: 5px;",
-        "Second button"
+        "Repository"
       )
     )
   )
