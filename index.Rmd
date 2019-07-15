@@ -1,5 +1,8 @@
 <!-- badges go here -->
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/JohnCoene)
+[![Travis build status](https://travis-ci.org/news-r/guardian.svg?branch=master)](https://travis-ci.org/news-r/guardian)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/news-r/guardian?branch=master&svg=true)](https://ci.appveyor.com/project/news-r/guardian)
+<!-- badges: end -->
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
